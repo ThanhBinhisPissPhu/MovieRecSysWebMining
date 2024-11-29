@@ -1,34 +1,15 @@
-import pandas as pd
-from sklearn import preprocessing
-from sklearn.model_selection import train_test_split
 import numpy as np
 import torch
 import time
 import matplotlib.pyplot as plt
 from tqdm.notebook import tqdm
 from model import LightGCN
+from load_data import load_data_ml100k
 from utils import *
 import os
 
 if __name__ == "__main__":
-    columns_name=['user_id','item_id','rating','timestamp']
-    df = pd.read_csv("data/ml-100k/u.data",sep="\t",names=columns_name)
-
-    train, test = train_test_split(df.values, test_size=0.1, random_state = 1)
-    train = pd.DataFrame(train, columns = df.columns)
-    test = pd.DataFrame(test, columns = df.columns)
-    le_user = preprocessing.LabelEncoder()
-    le_item = preprocessing.LabelEncoder()
-    train['user_id_idx'] = le_user.fit_transform(train['user_id'].values)
-    train['item_id_idx'] = le_item.fit_transform(train['item_id'].values)
-
-    train_user_ids = train['user_id'].unique()
-    train_item_ids = train['item_id'].unique()
-
-    test = test[(test['user_id'].isin(train_user_ids)) & (test['item_id'].isin(train_item_ids))]
-
-    test['user_id_idx'] = le_user.transform(test['user_id'].values)
-    test['item_id_idx'] = le_item.transform(test['item_id'].values)
+    train, test = load_data_ml100k(random_state = 1, test_size = 0.15)
     
     n_users = train['user_id_idx'].nunique()
     n_items = train['item_id_idx'].nunique()
@@ -132,7 +113,8 @@ if __name__ == "__main__":
     plt.xlabel('Epoch')
     plt.ylabel('Metrics')
     plt.legend()
-
+    save_path = os.path.join(directory, "metrics_plot.png")
+    plt.savefig(save_path)
 
     print("Last Epoch's Test Data Recall -> ", recall_list[-1])
     print("Last Epoch's Test Data Precision -> ", precision_list[-1])
