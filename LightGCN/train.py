@@ -1,17 +1,14 @@
 import pandas as pd
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-import scipy.sparse as sp
 import numpy as np
-import random
-import torch.nn as nn
 import torch
-from torch.utils.data import Dataset, DataLoader
 import time
 import matplotlib.pyplot as plt
 from tqdm.notebook import tqdm
 from model import LightGCN
 from utils import *
+import os
 
 if __name__ == "__main__":
     columns_name=['user_id','item_id','rating','timestamp']
@@ -59,6 +56,9 @@ if __name__ == "__main__":
     train_time_list = []
     eval_time_list = [] 
 
+    directory = "checkpoint/GCN"
+    os.makedirs(directory, exist_ok=True)
+
     for epoch in tqdm(range(EPOCHS)):
         n_batch = int(len(train)/BATCH_SIZE)
     
@@ -103,10 +103,10 @@ if __name__ == "__main__":
         if test_topK_ndcg > best_ndcg:
             best_ndcg = test_topK_ndcg
         
-            torch.save(final_user_Embed, 'checkpoint/GCN/final_user_Embed.pt')
-            torch.save(final_item_Embed, 'checkpoint/GCN/final_item_Embed.pt')
-            torch.save(initial_user_Embed, 'checkpoint/GCN/initial_user_Embed.pt')
-            torch.save(initial_item_Embed, 'checkpoint/GCN/initial_item_Embed.pt')
+            torch.save(final_user_Embed, f'{directory}/final_user_Embed.pt')
+            torch.save(final_item_Embed, f'{directory}/final_item_Embed.pt')
+            torch.save(initial_user_Embed, f'{directory}/initial_user_Embed.pt')
+            torch.save(initial_item_Embed, f'{directory}/initial_item_Embed.pt')
         
 
         eval_time = time.time() - train_end_time
@@ -122,3 +122,21 @@ if __name__ == "__main__":
 
         train_time_list.append(train_time)
         eval_time_list.append(eval_time)
+
+
+    epoch_list = [(i+1) for i in range(EPOCHS)]
+    plt.plot(epoch_list, recall_list, label='Recall')
+    plt.plot(epoch_list, precision_list, label='Precision')
+    plt.plot(epoch_list, ndcg_list, label='NDCG')
+    plt.plot(epoch_list, map_list, label='MAP')
+    plt.xlabel('Epoch')
+    plt.ylabel('Metrics')
+    plt.legend()
+
+
+    print("Last Epoch's Test Data Recall -> ", recall_list[-1])
+    print("Last Epoch's Test Data Precision -> ", precision_list[-1])
+    print("Last Epoch's Test Data NDCG -> ", ndcg_list[-1])
+    print("Last Epoch's Test Data MAP -> ", map_list[-1])
+
+    print("Last Epoch's Train Data Loss -> ", loss_list_epoch[-1])
