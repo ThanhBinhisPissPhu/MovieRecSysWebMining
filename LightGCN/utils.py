@@ -28,10 +28,18 @@ def data_loader(data, batch_size, n_usr, n_itm):
 
     interected_items_df = pd.merge(interected_items_df, users_df, how = 'right', left_on = 'user_id_idx', right_on = 'users')
   
-    pos_items = interected_items_df['item_id_idx'].apply(lambda x: random.choice(x) if isinstance(x, (list, np.ndarray)) else None).values
-    pos_items = pos_items[~pd.isna(pos_items)]  # Remove NaNs if necessary
+    print(interected_items_df['item_id_idx'])
 
-    # pos_items = interected_items_df['item_id_idx'].apply(lambda x : random.choice(x)).values
+    def debug_choice(x):
+        if isinstance(x, (list, np.ndarray)):
+            return random.choice(x)
+        else:
+            print(f"Invalid value found: {x}")  # Print invalid value
+            return None
+
+    pos_items = interected_items_df['item_id_idx'].apply(debug_choice).values
+
+    pos_items = interected_items_df['item_id_idx'].apply(lambda x : random.choice(x)).values
 
     neg_items = interected_items_df['item_id_idx'].apply(lambda x: sample_neg(x)).values
 
