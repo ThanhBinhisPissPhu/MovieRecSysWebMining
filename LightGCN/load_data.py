@@ -41,12 +41,12 @@ def load_data_ml100k_cs(N = 200, K = 20):
     
     train_base = pd.DataFrame()
     for item_id in hot_item_ids:
-        df_hot = item_group.get_group(item_id).sort_values(by='time_stamp')
+        df_hot = item_group.get_group(item_id).sort_values(by='timestamp')
         train_base = pd.concat([train_base, df_hot], ignore_index=True)
 
     train_warm_a, train_warm_b, train_warm_c, test = pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
     for item_id in cold_item_ids:
-        df_cold = item_group.get_group(item_id).sort_values(by='time_stamp')
+        df_cold = item_group.get_group(item_id).sort_values(by='timestamp')
         train_warm_a = pd.concat([train_warm_a, df_cold[:K]], ignore_index=True)
         train_warm_b = pd.concat([train_warm_b, df_cold[K:2*K]], ignore_index=True)
         train_warm_c = pd.concat([train_warm_c, df_cold[2*K:3*K]], ignore_index=True)
