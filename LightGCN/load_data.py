@@ -60,14 +60,29 @@ def load_data_ml100k_cs(N = 200, K = 20):
 
     le_user = preprocessing.LabelEncoder()
     le_item = preprocessing.LabelEncoder()
-    train_base['user_id_idx'] = le_user.fit_transform(train_base['user_id'].values)
-    train_base['item_id_idx'] = le_item.fit_transform(train_base['item_id'].values)
-    train_warm_a['user_id_idx'] = le_user.fit_transform(train_warm_a['user_id'].values)
-    train_warm_a['item_id_idx'] = le_item.fit_transform(train_warm_a['item_id'].values)
-    train_warm_b['user_id_idx'] = le_user.fit_transform(train_warm_b['user_id'].values)
-    train_warm_b['item_id_idx'] = le_item.fit_transform(train_warm_b['item_id'].values)
-    train_warm_c['user_id_idx'] = le_user.fit_transform(train_warm_c['user_id'].values)
-    train_warm_c['item_id_idx'] = le_item.fit_transform(train_warm_c['item_id'].values)
+
+    le_user.fit(np.unique(all_user_ids))
+    le_item.fit(np.unique(all_item_ids))
+
+    # Transform the user_id and item_id columns for each dataset
+    train_base['user_id_idx'] = le_user.transform(train_base['user_id'].values)
+    train_base['item_id_idx'] = le_item.transform(train_base['item_id'].values)
+    train_warm_a['user_id_idx'] = le_user.transform(train_warm_a['user_id'].values)
+    train_warm_a['item_id_idx'] = le_item.transform(train_warm_a['item_id'].values)
+    train_warm_b['user_id_idx'] = le_user.transform(train_warm_b['user_id'].values)
+    train_warm_b['item_id_idx'] = le_item.transform(train_warm_b['item_id'].values)
+    train_warm_c['user_id_idx'] = le_user.transform(train_warm_c['user_id'].values)
+    train_warm_c['item_id_idx'] = le_item.transform(train_warm_c['item_id'].values)
+
+
+    # train_base['user_id_idx'] = le_user.fit_transform(train_base['user_id'].values)
+    # train_base['item_id_idx'] = le_item.fit_transform(train_base['item_id'].values)
+    # train_warm_a['user_id_idx'] = le_user.fit_transform(train_warm_a['user_id'].values)
+    # train_warm_a['item_id_idx'] = le_item.fit_transform(train_warm_a['item_id'].values)
+    # train_warm_b['user_id_idx'] = le_user.fit_transform(train_warm_b['user_id'].values)
+    # train_warm_b['item_id_idx'] = le_item.fit_transform(train_warm_b['item_id'].values)
+    # train_warm_c['user_id_idx'] = le_user.fit_transform(train_warm_c['user_id'].values)
+    # train_warm_c['item_id_idx'] = le_item.fit_transform(train_warm_c['item_id'].values)
 
     all_user_ids = np.concatenate([
         train_base['user_id_idx'].values,
