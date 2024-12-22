@@ -11,7 +11,7 @@ import argparse
 
 def main(args):
     # Load data
-    train_base, wa, wb, wc, test = load_data_ml100k_cs(random_state=args.random_state, test_size=args.test_size)
+    train_base, wa, wb, wc, test = load_data_ml100k_cs()
 
     for df in [train_base, wa, wb, wc]:
         train = df
