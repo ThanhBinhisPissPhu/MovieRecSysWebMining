@@ -13,11 +13,14 @@ def main(args):
     # Load data
     train_base, wa, wb, wc, test = load_data_ml100k_cs()
 
+    train_full = pd.concat([train_base, train_warm_a, train_warm_b, train_warm_c], ignore_index=True)
+
+    # Calculate the number of unique users and items
+    n_users = train_full['user_id_idx'].nunique()
+    n_items = train_full['item_id_idx'].nunique()
+
     for df in [train_base, wa, wb, wc]:
         train = df
-    
-        n_users = train['user_id_idx'].nunique()
-        n_items = train['item_id_idx'].nunique()
         
         # Initialize model and optimizer
         lightGCN = LightGCN(train, n_users, n_items, args.n_layers, args.latent_dim)
