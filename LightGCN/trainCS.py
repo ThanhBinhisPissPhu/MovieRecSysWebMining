@@ -141,7 +141,7 @@ def main(args):
     best_ndcg = -1
 
     # Training loop for each dataset
-    datasets = [train_base, wa, wb, wc]
+    datasets = [train_base, wb, wc]
     print(train_base.head())
     print(wa.head())
     for df in datasets:
