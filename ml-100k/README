@@ -40,59 +40,7 @@ purposes under the following conditions:
 If you have any further questions or comments, please contact GroupLens
 <grouplens-info@cs.umn.edu>. 
 
-CITATION
-==============================================
 
-To acknowledge use of the dataset in publications, please cite the 
-following paper:
-
-F. Maxwell Harper and Joseph A. Konstan. 2015. The MovieLens Datasets:
-History and Context. ACM Transactions on Interactive Intelligent
-Systems (TiiS) 5, 4, Article 19 (December 2015), 19 pages.
-DOI=http://dx.doi.org/10.1145/2827872
-
-
-ACKNOWLEDGEMENTS
-==============================================
-
-Thanks to Al Borchers for cleaning up this data and writing the
-accompanying scripts.
-
-PUBLISHED WORK THAT HAS USED THIS DATASET
-==============================================
-
-Herlocker, J., Konstan, J., Borchers, A., Riedl, J.. An Algorithmic
-Framework for Performing Collaborative Filtering. Proceedings of the
-1999 Conference on Research and Development in Information
-Retrieval. Aug. 1999.
-
-FURTHER INFORMATION ABOUT THE GROUPLENS RESEARCH PROJECT
-==============================================
-
-The GroupLens Research Project is a research group in the Department
-of Computer Science and Engineering at the University of Minnesota.
-Members of the GroupLens Research Project are involved in many
-research projects related to the fields of information filtering,
-collaborative filtering, and recommender systems. The project is lead
-by professors John Riedl and Joseph Konstan. The project began to
-explore automated collaborative filtering in 1992, but is most well
-known for its world wide trial of an automated collaborative filtering
-system for Usenet news in 1996.  The technology developed in the
-Usenet trial formed the base for the formation of Net Perceptions,
-Inc., which was founded by members of GroupLens Research. Since then
-the project has expanded its scope to research overall information
-filtering solutions, integrating in content-based methods as well as
-improving current collaborative filtering technology.
-
-Further information on the GroupLens Research project, including
-research publications, can be found at the following web site:
-        
-        http://www.grouplens.org/
-
-GroupLens Research currently operates a movie recommender based on
-collaborative filtering:
-
-        http://www.movielens.org/
 
 DETAILED DESCRIPTIONS OF DATA FILES
 ==============================================
@@ -134,24 +82,4 @@ u.user     -- Demographic information about the users; this is a tab
 
 u.occupation -- A list of the occupations.
 
-u1.base    -- The data sets u1.base and u1.test through u5.base and u5.test
-u1.test       are 80%/20% splits of the u data into training and test data.
-u2.base       Each of u1, ..., u5 have disjoint test sets; this if for
-u2.test       5 fold cross validation (where you repeat your experiment
-u3.base       with each training and test set and average the results).
-u3.test       These data sets can be generated from u.data by mku.sh.
-u4.base
-u4.test
-u5.base
-u5.test
 
-ua.base    -- The data sets ua.base, ua.test, ub.base, and ub.test
-ua.test       split the u data into a training set and a test set with
-ub.base       exactly 10 ratings per user in the test set.  The sets
-ub.test       ua.test and ub.test are disjoint.  These data sets can
-              be generated from u.data by mku.sh.
-
-allbut.pl  -- The script that generates training and test sets where
-              all but n of a users ratings are in the training data.
-
-mku.sh     -- A shell script to generate all the u data sets from u.data.

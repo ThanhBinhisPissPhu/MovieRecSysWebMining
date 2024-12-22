@@ -62,6 +62,7 @@ def load_and_process_data():
     
 
     return X_train, y_train, X_valid, y_valid, X_test, y_test
+
 class MovieLensDataset(Dataset):
         def __init__(self, X, y):
             self.X = X
@@ -72,6 +73,8 @@ class MovieLensDataset(Dataset):
 
         def __getitem__(self, idx):
             return {col: torch.tensor(self.X.iloc[idx][col]) for col in self.X.columns}, torch.tensor(self.y.iloc[idx])
+        
+        
 # DeepFM Model
 class DeepFM(nn.Module):
     def __init__(self, num_occupations, num_age_bins, num_genres, embed_size):
