@@ -52,7 +52,7 @@ def load_data_ml100k_cs(N = 200, K = 20):
         train_warm_c = pd.concat([train_warm_c, df_cold[2*K:3*K]], ignore_index=True)
         test = pd.concat([test, df_cold[3*K:]], ignore_index=True)
 
-    train_base = pd.DataFrame(train, columns = df.columns)
+    train_base = pd.DataFrame(train_base, columns = df.columns)
     train_warm_a = pd.DataFrame(train_warm_a, columns = df.columns)
     train_warm_b = pd.DataFrame(train_warm_b, columns = df.columns)
     train_warm_c = pd.DataFrame(train_warm_c, columns = df.columns)
