@@ -226,11 +226,11 @@ def main(args):
         plt.savefig(save_path)
 
         # Print final metrics
-        print(f"Dataset {df} - Last Epoch's Test Data Recall ->", recall_list[-1])
-        print(f"Dataset {df} - Last Epoch's Test Data Precision ->", precision_list[-1])
-        print(f"Dataset {df} - Last Epoch's Test Data NDCG ->", ndcg_list[-1])
-        print(f"Dataset {df} - Last Epoch's Test Data MAP ->", map_list[-1])
-        print(f"Dataset {df} - Last Epoch's Train Data Loss ->", loss_list_epoch[-1])
+        print(f"Dataset - Last Epoch's Test Data Recall ->", recall_list[-1])
+        print(f"Dataset - Last Epoch's Test Data Precision ->", precision_list[-1])
+        print(f"Dataset - Last Epoch's Test Data NDCG ->", ndcg_list[-1])
+        print(f"Dataset - Last Epoch's Test Data MAP ->", map_list[-1])
+        print(f"Dataset - Last Epoch's Train Data Loss ->", loss_list_epoch[-1])
 
 
 if __name__ == "__main__":
