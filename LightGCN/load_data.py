@@ -61,6 +61,20 @@ def load_data_ml100k_cs(N = 200, K = 20):
     le_user = preprocessing.LabelEncoder()
     le_item = preprocessing.LabelEncoder()
 
+    all_user_ids = np.concatenate([
+        train_base['user_id'].values,
+        train_warm_a['user_id'].values,
+        train_warm_b['user_id'].values,
+        train_warm_c['user_id'].values
+    ])
+    all_item_ids = np.concatenate([
+        train_base['item_id'].values,
+        train_warm_a['item_id'].values,
+        train_warm_b['item_id'].values,
+        train_warm_c['item_id'].values
+    ])
+
+
     le_user.fit(np.unique(all_user_ids))
     le_item.fit(np.unique(all_item_ids))
 
