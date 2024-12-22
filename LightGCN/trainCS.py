@@ -142,6 +142,8 @@ def main(args):
 
     # Training loop for each dataset
     datasets = [train_base, wa, wb, wc]
+    print(train_base.head())
+    print(wa.head())
     for df in datasets:
         train = df
 
