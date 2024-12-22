@@ -147,11 +147,13 @@ def main(args):
     best_ndcg = -1
 
     # Training loop for each dataset
-    datasets = [wa, wb, wc]
+    datasets = [train_base, wa, wb, wc]
     print(train_base.head())
     print(wa.head())
+    train = pd.DataFrame()  # Start with an empty DataFrame
+
     for df in datasets:
-        train = df
+        train = pd.concat([train, df], ignore_index=True)
 
         # Training loop
         for epoch in tqdm(range(args.epochs)):
