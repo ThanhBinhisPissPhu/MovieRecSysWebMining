@@ -213,18 +213,6 @@ def main(args):
             train_time_list.append(train_time)
             eval_time_list.append(eval_time)
 
-        # Plot metrics
-        epoch_list = [(i + 1) for i in range(args.epochs)]
-        plt.plot(epoch_list, recall_list, label='Recall')
-        plt.plot(epoch_list, precision_list, label='Precision')
-        plt.plot(epoch_list, ndcg_list, label='NDCG')
-        plt.plot(epoch_list, map_list, label='MAP')
-        plt.xlabel('Epoch')
-        plt.ylabel('Metrics')
-        plt.legend()
-        save_path = os.path.join(directory, "metrics_plot.png")
-        plt.savefig(save_path)
-
         # Print final metrics
         print(f"Dataset - Last Epoch's Test Data Recall ->", recall_list[-1])
         print(f"Dataset - Last Epoch's Test Data Precision ->", precision_list[-1])
