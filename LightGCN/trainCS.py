@@ -13,35 +13,35 @@ def main(args):
     # Load data
     train_base, wa, wb, wc, test = load_data_ml100k_cs()
 
-    train_full = pd.concat([train_base, wa, wb, wc], ignore_index=True)
-
     # Calculate the number of unique users and items
-    n_users = train_full['user_id_idx'].nunique()
-    n_items = train_full['item_id_idx'].nunique()
+    n_users = train_base['user_id_idx'].nunique()
+    n_items = train_base['item_id_idx'].nunique()
 
-    for df in [train_base, wa, wb, wc]:
+    # Initialize model and optimizer
+    lightGCN = LightGCN(train_base, n_users, n_items, args.n_layers, args.latent_dim)
+    optimizer = torch.optim.Adam(lightGCN.parameters(), lr=args.lr)
+
+    # Metrics and logs
+    loss_list_epoch, MF_loss_list_epoch, reg_loss_list_epoch = [], [], []
+    recall_list, precision_list, ndcg_list, map_list = [], [], [], []
+    train_time_list, eval_time_list = [], []
+
+    # Ensure checkpoint directory exists
+    directory = "checkpoint/GCN"
+    os.makedirs(directory, exist_ok=True)
+
+    best_ndcg = -1
+
+    # Training loop for each dataset
+    datasets = [train_base, wa, wb, wc]
+    for df in datasets:
         train = df
-        
-        # Initialize model and optimizer
-        lightGCN = LightGCN(train, n_users, n_items, args.n_layers, args.latent_dim)
-        optimizer = torch.optim.Adam(lightGCN.parameters(), lr=args.lr)
-        
-        # Metrics and logs
-        loss_list_epoch, MF_loss_list_epoch, reg_loss_list_epoch = [], [], []
-        recall_list, precision_list, ndcg_list, map_list = [], [], [], []
-        train_time_list, eval_time_list = [], []
-
-        # Ensure checkpoint directory exists
-        directory = "checkpoint/GCN"
-        os.makedirs(directory, exist_ok=True)
-
-        best_ndcg = -1
 
         # Training loop
         for epoch in tqdm(range(args.epochs)):
             n_batch = int(len(train) / args.batch_size)
             final_loss_list, MF_loss_list, reg_loss_list = [], [], []
-            
+
             train_start_time = time.time()
             lightGCN.train()
             for batch_idx in range(n_batch):
@@ -108,11 +108,12 @@ def main(args):
         plt.savefig(save_path)
 
         # Print final metrics
-        print("Last Epoch's Test Data Recall ->", recall_list[-1])
-        print("Last Epoch's Test Data Precision ->", precision_list[-1])
-        print("Last Epoch's Test Data NDCG ->", ndcg_list[-1])
-        print("Last Epoch's Test Data MAP ->", map_list[-1])
-        print("Last Epoch's Train Data Loss ->", loss_list_epoch[-1])
+        print(f"Dataset {df} - Last Epoch's Test Data Recall ->", recall_list[-1])
+        print(f"Dataset {df} - Last Epoch's Test Data Precision ->", precision_list[-1])
+        print(f"Dataset {df} - Last Epoch's Test Data NDCG ->", ndcg_list[-1])
+        print(f"Dataset {df} - Last Epoch's Test Data MAP ->", map_list[-1])
+        print(f"Dataset {df} - Last Epoch's Train Data Loss ->", loss_list_epoch[-1])
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run LightGCN with command-line arguments.")
