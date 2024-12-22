@@ -119,6 +119,12 @@ def main(args):
     # Load data
     train_base, wa, wb, wc, test = load_data_ml100k_cs()
 
+    train_base.to_csv('train_base.csv', index=False)
+    wa.to_csv('wa.csv', index=False)
+    wb.to_csv('wb.csv', index=False)
+    wc.to_csv('wc.csv', index=False)
+    test.to_csv('test.csv', index=False)
+
     train_full = pd.concat([train_base, wa, wb, wc], ignore_index=True)
 
     # Calculate the number of unique users and items
