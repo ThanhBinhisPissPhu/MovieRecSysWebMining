@@ -21,7 +21,7 @@ python=3.9.0\
 Please also refer to requirements.txt.
 
 ## Dataset
-* Please use preprocess_ml100k.ipynb` to generate `movielens100K_data.pkl`. 
+* Please use `preprocess_ml100k.ipynb` to generate `movielens100K_data.pkl`. 
 ## Run
 1. model_name：gnn
 2. warmup_model：emerg
