@@ -21,15 +21,7 @@ python=3.9.0\
 Please also refer to requirements.txt.
 
 ## Dataset
-* `movielens1M_data.pkl` and `taobaoAD_data.pkl` are the names of the dataset files. 
-
-* Please refer to `http://files.grouplens.org/datasets/movielens/` and `https://tianchi.aliyun.com/dataset/dataDetail?dataId=56` for the public raw dataset `movielens-1M` and `taobaoAD`. 
-
-* The preprocessing scripts `data_process/movielens1M_preprocess.ipynb` and `data_process/taobaoAD_preprocess.ipynb` generate `movielens1M_data.pkl` and `taobaoAD_data.pkl` from these raw datasets. 
-
-* Please put the generated `movielens1M_data.pkl` and `taobaoAD_data.pkl` in `datahub/movielens1M` and `datahub/taobaoAD` respectively.
-
-* We also provide the processed dataset at `https://drive.google.com/drive/folders/1EP6tgQJ5nx8Y6a41g-kbi3n6_8oxcWd1?usp=sharing`.
+* Please use preprocess_ml100k.ipynb` to generate `movielens100K_data.pkl`. 
 ## Run
 1. model_name：gnn
 2. warmup_model：emerg
