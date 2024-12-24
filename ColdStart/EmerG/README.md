@@ -26,14 +26,9 @@ Please also refer to requirements.txt.
 1. model_name：gnn
 2. warmup_model：emerg
 3. train and test
-   * movielens1M:
+   * movielens100K:
      ```
      python main.py --dataset_name movielens1M --model_name gnn  --warmup_model emerg --item_id_name item_id --device cuda:0
-     ```
-
-   * taobao:
-     ```
-     python main.py --dataset_name taobaoAD --model_name gnn  --warmup_model emerg --item_id_name item_id --device cuda:0
      ```
 
 ## Codes
