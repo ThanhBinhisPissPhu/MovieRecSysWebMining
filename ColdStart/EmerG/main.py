@@ -15,6 +15,7 @@ import nni
 from data import MovieLens1MColdStartDataLoader
 from model import EmerG
 from model.gnn import GNN
+import pandas as pd
 
 from copy import deepcopy
 import networkx as nx
@@ -449,6 +450,19 @@ def emerg(model, dataloaders, model_name, epoch, meta_epoch, meta_lr, warm_lr, i
     print(scores_b)
     print(labels_c)
     print(scores_c)
+    input_file = 'label.csv'  # Replace with your actual file path
+    df = pd.read_csv(input_file)
+
+    df['cold'] = scores_cold
+    df['wa'] = scores_a
+    df['wb'] = scores_b
+    df['wc'] = scores_c
+
+    # Save the updated DataFrame back to the CSV file
+    output_file = 'result.csv'  # You can overwrite the input file or create a new one
+    df.to_csv(output_file, index=False)
+
+    print(f"Updated data has been saved to {output_file}")
 
     auc_list.append(roc_auc_score(labels_cold, scores_cold))
     auc_list.append(roc_auc_score(labels_a, scores_a))
@@ -458,8 +472,8 @@ def emerg(model, dataloaders, model_name, epoch, meta_epoch, meta_lr, warm_lr, i
     f1_list.append(f1_score(labels_a, (scores_arr_a > np.mean(scores_arr_a)).astype(np.float32).tolist()))
     f1_list.append(f1_score(labels_b, (scores_arr_b > np.mean(scores_arr_b)).astype(np.float32).tolist()))
     f1_list.append(f1_score(labels_c, (scores_arr_c > np.mean(scores_arr_c)).astype(np.float32).tolist()))
-    print(auc_list)
-    print(f1_list)
+    # print(auc_list)
+    # print(f1_list)
 
     auc_list = []
     f1_list = []
@@ -482,10 +496,10 @@ def emerg(model, dataloaders, model_name, epoch, meta_epoch, meta_lr, warm_lr, i
         precision_list.append(precision_score(labels, predictions))
         recall_list.append(recall_score(labels, predictions))
 
-    print("AUC List:", auc_list)
-    print("F1 List:", f1_list)
-    print("Precision List:", precision_list)
-    print("Recall List:", recall_list)
+    # print("AUC List:", auc_list)
+    # print("F1 List:", f1_list)
+    # print("Precision List:", precision_list)
+    # print("Recall List:", recall_list)
 
     return auc_list, f1_list
 
